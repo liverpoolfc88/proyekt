@@ -32,3 +32,8 @@ Route::post('dost/{id}','FriendController@update')->name('update');
 
 
 Route::get('futball','FutballController@getAll');
+Route::delete('futball_delete/{id}','FutballController@delete');
+
+// plareys
+Route::post('update_player','FutballController@update');
+
