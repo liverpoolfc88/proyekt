@@ -40,11 +40,7 @@
         computed:{
             menuItems(){
                 return [
-                    {
-                        icon: 'mdi-soccer-field',
-                        title: 'Anfild',
-                        route: '/anfild'
-                    },
+
                     {
                         icon: 'mdi-soccer',
                         title: 'Players',
@@ -54,6 +50,11 @@
                         icon: 'mdi-teach',
                         title: 'Coach',
                         route: '/coach'
+                    },
+                    {
+                        icon: 'mdi-soccer-field',
+                        title: 'Anfild',
+                        route: '/anfild'
                     },
                     {
                         icon: 'mdi-account-group',

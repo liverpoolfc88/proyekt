@@ -140,7 +140,8 @@
 
                 players: [],
                 form: [],
-                dialogHeaderText: ''
+                dialogHeaderText: '',
+                formData: [],
             }
         },
         methods: {
@@ -166,8 +167,7 @@
                     age: "",
                     number:"",
                     youtube_link:"",
-                    rating:"",
-                    file: ""
+                    rating:""
                 };
                 this.create = true;
                 // this.editMode = false;
@@ -181,17 +181,39 @@
                 // if (this.$refs.dialogForm) this.$refs.dialogForm.reset();
             },
             save() {
-
-                this.form.file =
+                this.formData.append("files[]", this.form.file);
+                console.log(this.formData);
                 axios.post(this.$store.state.backend_url + "/api/update_player", this.form)
                     .then(res => {
+                        const obj_id = res.data;
+                        axios
+                            .post(
+                                this.$store.state.backend_url +
+                                "/api/player/update-files/" +
+                                obj_id,
+                                this.formData,
+                                {
+                                    headers: {
+                                        "Content-Type": "multipart/form-data"
+                                    }
+                                }
+                            )
+                            .then(resp => {
+                                console.log(resp);
+                                // this.loading = false;
+                                // this.$router.push("/documents/list");
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                // this.loading = false;
+                            });
                         this.getList();
                         this.create = false;
                         console.log(res);
                     }).catch(err => {
                         console.error(err);
                 })
-               console.log(this.form);
+               // console.log(this.form);
             },
             deletePlayer(id){
                 Swal.fire({
@@ -232,6 +254,7 @@
         },
         mounted() {
             this.getList();
+            this.formData = new FormData();
         },
         computed: {
             filteredPlayers() {

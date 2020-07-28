@@ -36,6 +36,5 @@ Route::delete('futball_delete/{id}','FutballController@delete');
 
 // plareys
 Route::post('update_player','FutballController@update');
-
-Route::post('update_file','FileController@upload');
+Route::post('player/update-files/{id}','FutballController@updateFile');
 

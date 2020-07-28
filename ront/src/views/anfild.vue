@@ -1,60 +1,83 @@
 <template>
-
-    <div class="home">
-        <h1>Anfild</h1>
-        <div class="container">
-            <v-row>
-                <v-col cols="12" md="8">
-                    <div v-for="(video,i) in videoPlayer" :key="i">
-                        <!--               <div style="height: 300px; width:500px" v-html="video.videolink">-->
-
-                            <iframe width="100%" height="500" :src="video.videolink" frameborder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            <!--                   {{ video.videolink }}-->
-
-                        {{ video.title }}
-                        {{ video.date }}
-
-                    </div>
-                </v-col>
-                <v-col cols="6" md="4">
-                    456
-                </v-col>
-            </v-row>
+    <div class="container" style="padding-top: 20px">
+        <v-btn @click="onBUttonClick">
+            <v-icon>mdi-file</v-icon>
+            Select File
+        </v-btn>
+        <v-text-field
+                v-model="formData.displayFileName"
+                readonly
+        ></v-text-field>
+        <input type="file" class="iffile" ref="fupload" @change="onFileChange">
+        <div v-if="readyToUpload">
+            <img :src="formData.uploadFileData" class="pre-img">
         </div>
-
+        <v-btn v-if="readyToUpload" @click="uploadImage">
+            <v-icon left>mdi-upload</v-icon>
+            fayl yuklash
+        </v-btn>
     </div>
 </template>
-<script>
-    export default {
 
-        computed: {
-            videoPlayer(){
-                return[
-                    {
-                        videolink: 'https://www.youtube.com/embed/uqXmXHnPH0Q',
-                        title: 'Buklet',
-                        date: '12.07.2020',
-                        view: 21
-                    },
-                    {
-                        videolink: 'https://www.youtube.com/embed/uqXmXHnPH0Q',
-                        title: 'Buklet',
-                        date: '12.07.2020',
-                        view: 21
-                    },
-                    {
-                        videolink: 'https://www.youtube.com/embed/aiZ7NGw8yqI',
-                        title: 'Buklet',
-                        date: '12.07.2020',
-                        view: 21
+<script>
+    import axios from 'axios';
+    export default {
+        computed:{
+          readyToUpload(){
+              return this.formData.displayFileName && this.formData.uploadFileData;
+          }
+        },
+        data(){
+            return{
+                formData:{
+                    displayFileName: null,
+                    uploadFileData: null,
+                    file: null
+                }
+            }
+        },
+        methods:{
+            onFileChange(event){
+                if (event.target.files && event.target.files.length){
+                    let file = event.target.files[0];
+                    this.formData.file = file;
+                    this.formData.displayFileName = event.target.files[0].name + '('+this.calcSize( file.size )+'Kb)';
+
+                    let reader = new FileReader();
+                    reader.onload = e => {
+                        this.formData.uploadFileData = e.target.result;
                     }
-                ]
+                    reader.readAsDataURL(file);
+                }
+
+            },
+            onBUttonClick(){
+                this.$refs.fupload.click();
+            },
+            calcSize(size){
+                return Math.round(size/1024)
+            },
+            uploadImage(){
+                let data = new FormData();
+                data.append('fupload',this.formData.file);
+
+                axios.post(this.$store.state.backend_url +'/api/upload_file', data)
+                    .then(response => {
+                        console.log(response.data);
+                    })
             }
         }
     }
 </script>
 
-<!--<iframe width="902" height="541" src="https://www.youtube.com/embed/aiZ7NGw8yqI" frameborder="0"-->
-<!--        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
-
+<style>
+    .iffile{
+        display: none;
+    }
+    .pre-img{
+        width: 250px;
+        padding: 15px;
+        border: 1px solid red;
+        border-radius: 5px;
+    }
+</style>

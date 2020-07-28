@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Futball;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FutballController extends Controller
 {
@@ -40,28 +41,25 @@ class FutballController extends Controller
         $model->save();
 
 
-        return "delete ishladi!";
+        return $model->id;
     }
 
-    public function upload(Request $request){
+    public function updateFile(Request $request, $id)
+    {
+        $file = $request->file('files');
+        $object_id = $id;
 
+        $filename = time() . rand();
+        Storage::putFileAs(
+            'players',
+            $file,
+            $filename
+        );
+        $file = Futball::where('id', $id);
+        $file->img = $file->getClientOriginalName();
+        $file->physical_name = $filename;
+        $file->save();
 
-
-//        $result = ['succes'=>true];
-//        if ($request->fupload){
-//            $file = $request->fupload;
-//            $ext = $file->getClientOriginalExtension();
-//            $filename = $file->getClientOriginalName();
-//            $mime = $file->getClientMimeType();
-//            $size = $file->getClientSize();
-//
-//            try{
-//                $file->move('images',$filename);
-//            } catch (Exeption $e){
-//                $result['succes'] = false;
-//                $result['error'] = $e->getMessage();
-//            }
-//        }
-        return 'saqlandi';
+        return "nima boldi";
     }
 }
