@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
-   protected $fillable = ['name','ext','mime','size'];
+    protected $table = 'files';
+    protected $fillable = ['name','ext','mime','size'];
 }
 
