@@ -25,7 +25,17 @@
                         <v-form>
                             <v-text-field
                                     label="Login"
+                                    v-model="form.login"
                                     name="login"
+                                    :error-messages="checkError('login')"
+                                    prepend-icon="mdi-account"
+                                    type="text"
+                            ></v-text-field>
+                            <v-text-field
+                                    label="Email"
+                                    v-model="form.email"
+                                    name="login"
+                                    :error-messages="checkError('email')"
                                     prepend-icon="mdi-account"
                                     type="text"
                             ></v-text-field>
@@ -33,7 +43,16 @@
                             <v-text-field
                                     id="password"
                                     label="Password"
+                                    v-model="form.password"
                                     name="password"
+                                    :error-messages="checkError('password')"
+                                    prepend-icon="mdi-lock"
+                                    type="password"
+                            ></v-text-field>
+                            <v-text-field
+                                    label="Confirm Password"
+                                    name="password_confirmation"
+                                    v-model="form.password1"
                                     prepend-icon="mdi-lock"
                                     type="password"
                             ></v-text-field>
@@ -41,10 +60,54 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn dark color="red darken-4">Login</v-btn>
+                        <v-btn dark color="red darken-4" @click="onRegister">Login</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
         </v-row>
     </v-container>
 </template>
+
+
+<script>
+    import axios from 'axios';
+
+    export default {
+        data(){
+            return{
+                form:{
+                    // login: null,
+                    // email: null,
+                    password1: null,
+                    // password_confirmation: null,
+
+                },
+                errors:{}
+            }
+        },
+        methods:{
+            onRegister(){
+              // this.errors = {};
+
+            axios.post(this.$store.state.backend_url + '/api/signup',this.form)
+                .then(res=>{
+                    if ((res.data.success) && (this.form.password == this.form.password)){
+                        this.router.push('/');
+                    }
+                    else {
+                        console.log('parol ikki xil');
+                    }
+                })
+                .catch(error => {
+                    this.errors = error.response.data.errors;
+                });
+
+            },
+            checkError(){
+                // return this.errors.hasOwnProperty(field)?this.errors[field]:[];
+                return 'error';
+            }
+        }
+    }
+
+</script>
