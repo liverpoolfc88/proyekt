@@ -92,7 +92,7 @@
             axios.post(this.$store.state.backend_url + '/api/signup',this.form)
                 .then(res=>{
                     if ((res.data.success) && (this.form.password == this.form.password)){
-                        this.router.push('/');
+                        this.$router.push('/');
                     }
                     else {
                         console.log('parol ikki xil');

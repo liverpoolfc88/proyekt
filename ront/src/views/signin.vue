@@ -80,7 +80,7 @@
                     .then(res=>{
                         if (res.data.success){
                             console.log('xaaaaa')
-                            this.router.push('/');
+                            this.$router.push('/');
                         }
                         else {
                             console.log('parol ikki xil');
