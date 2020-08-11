@@ -33,6 +33,11 @@ Vue.use(VueRouter)
     name: 'Regstratsiya',
     component: () => import( '@/views/signup.vue')
   },
+    {
+      path: '/logout',
+      name: 'Logout',
+      // component: () => import( '@/views/signup.vue')
+    },
   {
     path: '/profile',
     name: 'Profil',

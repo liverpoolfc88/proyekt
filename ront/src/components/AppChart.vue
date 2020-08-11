@@ -1,27 +1,27 @@
 <template>
     <div class="home">
         <h1>fans</h1>
-        <div style="width: 400px !important; height: 400px !important;">
-        <canvas ref="canvas"></canvas>
+        <div style="width: 600px !important; height: 400px !important;">
+            <canvas ref="canvas"></canvas>
         </div>
     </div>
 </template>
 
 <script>
 
-    import { Bar } from "vue-chartjs";
+    import { PolarArea } from "vue-chartjs";
 
     export default {
         name: "Chart",
-        extends: Bar,
+        extends: PolarArea,
         data() {
             return {
-                type: 'Bar',
+                type: 'PolarArea',
                 data: {
                     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                     datasets: [{
                         label: 'of Votes',
-                        data: [2, 5, 8, 15, 21, 35],
+                        data: [50, 35, 42, 39, 50, 35],
                         backgroundColor: [
                             'rgba(255, 99, 132)',
                             'rgba(54, 162, 235)',
