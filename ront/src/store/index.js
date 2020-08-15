@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    backend_url: 'http://lava.loc',
+    backend_url: 'http://laravel.loc',
     // backend_url: 'http://wb.uzautomotors.com/',
     // access_token: Cookies.get('access_token') || "null",
     // user: null,

@@ -69,7 +69,7 @@
         alert(id);
       },
       getList() {
-        axios.get('http://lava.loc/api/dost')
+        axios.get('http://laravel.loc/api/dost')
                 .then(res => {
                   this.friends = res.data
                   console.log(res.data);
