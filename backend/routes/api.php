@@ -44,3 +44,12 @@ Route::post('update_player','FutballController@update');
 
 Route::post('update_file','FileController@upload');
 
+Route::post('upload', 'FileController@store');
+
+Route::get('data', 'FileController@store');
+
+
+Route::get('vil', 'SardorController@index');
+
+
+

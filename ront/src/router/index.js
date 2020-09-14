@@ -29,6 +29,11 @@ Vue.use(VueRouter)
     component: () => import( '@/views/signin.vue')
   },
   {
+    path: '/excel',
+    name: 'Excel',
+    component: () => import( '@/views/excel.vue')
+  },
+  {
     path: '/signup',
     name: 'Regstratsiya',
     component: () => import( '@/views/signup.vue')

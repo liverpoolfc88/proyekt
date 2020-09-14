@@ -42,6 +42,11 @@
                 return [
 
                     {
+                        icon: 'mdi-file',
+                        title: 'Excel',
+                        route: '/excel'
+                    },
+                     {
                         icon: 'mdi-soccer',
                         title: 'Players',
                         route: '/players'
