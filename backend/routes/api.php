@@ -50,6 +50,7 @@ Route::get('data', 'FileController@store');
 
 
 Route::get('vil', 'SardorController@index');
+Route::get('list', 'PostsController@getList');
 
 
 

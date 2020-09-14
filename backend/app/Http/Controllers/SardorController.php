@@ -17,6 +17,13 @@ class SardorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+//    public function index()
+//    {
+//        $list = Viloyat::select('viloyats.id as id','viloyats.name as vil_name','viloyats.hokimi as vil_hokim','shaxars.name as shaxar_name','maxallas.name as maxalla_name')->leftJoin('shaxars', 'shaxars.viloyat_id', 'viloyats.id')
+//            ->leftJoin('maxallas', 'shaxars.id', 'maxallas.tuman_id')->get();
+//        return $list;
+//    }
     public function index()
     {
         $vil = Viloyat::
@@ -28,32 +35,49 @@ class SardorController extends Controller
         $list=[];
 
         foreach ($vil as $key=>$value){
-            if(isset($value['shaxar']))
-            foreach($value['shaxar'] as $ke=>$val){               
-                if(isset($val['maxalla'])){
-                    foreach($val['maxalla'] as $k=>$v){
-                        array_push($list, (object)
+                foreach ($value['shaxar'] as $ke => $val) {
+                        foreach ($val['maxalla'] as $k => $v) {
+                            array_push($list, (object)
                             [
                                 'Vilid' => $value->id,
-                                'Vilname'=>$value->name,
-                                'Vilmaydon'=>$value->maydoni,
-                                'Vilhokim'=>$value->hokimi,
+                                'Vilname' => $value->name,
+                                'Vilmaydon' => $value->maydoni,
+                                'Vilhokim' => $value->hokimi,
 
-                                'ShaxId'=>$val->id,
-                                'ShaxName'=>$val->name,
-                                'ShaxHokimi'=>$val->hokimi,
-                               
-                                'MaxId'=>$v->id,
-                                'MaxName'=>$v->name,
-                                'MaxRais'=>$v->rais,
+                                'ShaxId' => $val->id,
+                                'ShaxName' => $val->name,
+                                'ShaxHokimi' => $val->hokimi,
+
+                                'MaxId' => $v->id,
+                                'MaxName' => $v->name,
+                                'MaxRais' => $v->rais,
                             ]);
+                        }
+                        array_push($list, (object)
+                        [
+                            'Vilid' => $value->id,
+                            'Vilname' => $value->name,
+                            'Vilmaydon' => $value->maydoni,
+                            'Vilhokim' => $value->hokimi,
+
+                            'ShaxId' => $val->id,
+                            'ShaxName' => $val->name,
+                            'ShaxHokimi' => $val->hokimi,
+                        ]);
                     }
                 }
-               
-            }
-        }
 
-       
+//            array_push($list, (object)
+//            [
+//                'Vilid' => $value->id,
+//                'Vilname'=>$value->name,
+//                'Vilmaydon'=>$value->maydoni,
+//                'Vilhokim'=>$value->hokimi,
+//
+//            ]);
+
+
+
 
         // return $vil;
         return $list;
